@@ -28,6 +28,8 @@ def courses(request):
 
 def add_a_course(request):
     c = {}
+    c.update(csrf(request))
+
     if request.method == 'POST':
         form = CourseForm(request.POST)     # create a form instance from request
         title = request.POST.get('inputName')
@@ -36,7 +38,6 @@ def add_a_course(request):
 
             try:
                 obj = Course.objects.get(title=title)
-                c.update(csrf(request))
                 c['message'] = 'A course with this title exists.'
                 return render_to_response("rate/add_a_course.html", c)
             except:
@@ -44,7 +45,6 @@ def add_a_course(request):
 
             try:
                 obj = Course.objects.get(initials=initials)
-                c.update(csrf(request))
                 c['message'] = 'A course with these initials exists.'
                 return render_to_response("rate/add_a_course.html", c)
             except:
@@ -60,7 +60,6 @@ def add_a_course(request):
             return render_to_response("rate/add_a_course.html", c)
     # if a GET (or any other method) we'll create a blank form
     elif request.method == 'GET':
-        c.update(csrf(request))
         return render_to_response("rate/add_a_course.html", c)
 
 
@@ -75,7 +74,26 @@ def lecturers(request):
 
 
 def add_a_lecturer(request):
-    return render(request, "rate/add_a_lecturer.html")
+    c = {}
+    c.update(csrf(request))
+    logger.debug(request.POST)
+    if request.method == 'POST':
+        first_name = request.POST.get('inputName')
+        last_name = request.POST.get('inputSurname')
+        if first_name and last_name:
+            try:
+                obj = Lecturer.objects.get(first_name=first_name, last_name=last_name)
+                c['message'] = 'A lecturer with this name already exists.'
+                return render_to_response("rate/add_a_lecturer.html", c)
+            except:
+                lecturer_form = Lecturer.create(first_name=first_name, last_name=last_name)
+                lecturer_form.save()
+                return HttpResponseRedirect('/')
+        else:
+            c['message'] = 'your form was invalid'
+            return render_to_response("rate/add_a_lecturer.html", c)
+    elif request.method == 'GET':
+        return render_to_response("rate/add_a_lecturer.html", c)
 
 
 def response(request):
