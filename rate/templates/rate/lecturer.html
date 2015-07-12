@@ -1,0 +1,8 @@
+{% extends "rate/base.html" %}
+{% block body %}
+    {% if lecturer %}
+        {{lecturer.first_name}} {{lecturer.last_name}}
+    {% else %}
+        This person doesn't exist!
+    {% endif %}
+{% endblock %}

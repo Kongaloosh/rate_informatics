@@ -9,6 +9,7 @@ urlpatterns = patterns('',
     url(r'^c$', courses, name='course_list'),
     url(r'^c/(?P<course_initials>.+)/', course, name='course'),
     url(r'^c/add', add_a_course, name='add_a_course'),
+    url(r'^l/(?P<first_name>\w+)_(?P<last_name>\w+)', lecturer, name='lecturer'),
     url(r'^l/add', add_a_lecturer, name='add_a_lecturer'),
     url(r'^r/add', add_a_response, name='add_a_response'),
     # Examples:

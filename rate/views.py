@@ -41,10 +41,22 @@ def add_a_course(request):
         return render_to_response("rate/add_a_course.html", c)
 
 
+def lecturer(request, first_name, last_name):
+    c = {'lecturer': Lecturer.objects.get(first_name=first_name.title(), last_name=last_name.title())}
+    return render_to_response('rate/lecturer.html', c)
+
+
+def lecturers(request):
+    c = {'lecturers': Course.objects.all()}
+    return render_to_response('rate/lecturer_list.html', c)
 
 
 def add_a_lecturer(request):
     return render(request, "rate/add_a_lecturer.html")
+
+
+def response(request):
+    pass
 
 
 def add_a_response(request):
