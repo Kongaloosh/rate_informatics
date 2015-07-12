@@ -26,7 +26,9 @@
                 <div class="span12">
                     <div class="text col-md-9">
                         <strong>{{selection.lecturer_1.first_name}} {{selection.lecturer_1.last_name}}</strong>
+                        {% if selection.lecturer_2 %}
                         &
+                        {% endif%}
                         <strong>{{selection.lecturer_2.first_name}} {{selection.lecturer_2.last_name}}</strong>
                         <p>{{selection.rating}}</p>
                     </div>
@@ -49,7 +51,9 @@
                             {{review.0.lecturer_1.first_name}} {{review.0.lecturer_1.last_name}}
                         </a>
                     </strong>
+                    {% if selection.lecturer_2 %}
                         &
+                    {% endif%}
                     <strong>
                         <a href="/l/{{review.0.lecturer_2.first_name}}_{{review.0.lecturer_2.last_name}}">
                             {{review.0.lecturer_2.first_name}} {{review.0.lecturer_2.last_name}}

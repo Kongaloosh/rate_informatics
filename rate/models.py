@@ -24,11 +24,20 @@ class Rating(models.Model):
     semester = models.IntegerField()
     rating = models.TextField(max_length=1000)
     lecturer_1 = models.ForeignKey(Lecturer, related_name="first_lecturer")
-    lecturer_2 = models.ForeignKey(Lecturer, default=None, related_name="second_lecturer")
+    lecturer_2 = models.ForeignKey(Lecturer, null=True, default=None, related_name="second_lecturer")
     course = models.ForeignKey(Course)
 
+    def __hash__(self):
+        return hash(self.year)
+
+    def __eq__(self, other):
+        return self.course == other.course and \
+               self.year == other.year and\
+               self.semester == other.semester and\
+               self.rating == other.rating
+
     @classmethod
-    def create(cls, year, semester, lecturer_1, lecturer_2, course, text):
+    def create(cls, year, semester, lecturer_1, course, text, lecturer_2=None):
         if isinstance(year, int) and isinstance(semester, int):
             a = cls(year=year,
                     semester=semester,

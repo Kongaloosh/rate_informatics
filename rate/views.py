@@ -80,27 +80,20 @@ def lecturer(request, first_name, last_name):
 
     except:
         c = {'lecturer': None}
-
-    a = []
-    b = []
     try:
         a = Rating.objects.filter(lecturer_1=c['lecturer']).distinct('course')
     except:
-        pass
+        a = []
     try:
-        b = Rating.objects.filter(lecturer_2=c['lecturer']).distinct('course')
+        b = c['taught_courses'] | Rating.objects.filter(lecturer_2=c['lecturer']).distinct('course')
     except:
-        pass
-    c['taught_courses'] = list(chain(a, b))
+        b = []
+
+    c['taught_courses'] = set(list(chain(a, b)))
 
     review = []
     for i in c['taught_courses']:
-        try:
-            review.append(Rating.objects.filter(lecturer_1=c['lecturer'], course=i.course))
-        except:pass
-        try:
-            review.append(Rating.objects.filter(lecturer_2=c['lecturer'], course=i.course))
-        except:pass
+        review.append(Rating.objects.filter(lecturer_1=i.lecturer_1, course=i.course))
         c['reviews'] = review
 
     return render_to_response('rate/lecturer.html', c)
@@ -148,6 +141,10 @@ def add_a_response(request):
         course_initials = request.POST.get('course')
         lecturer_1 = request.POST.get('lecturer_1').split('_')
         lecturer_2 = request.POST.get('lecturer_2').split('_')
+
+        print('lecturer_2 {a} {b}'.format(a=lecturer_2[0], b=""))
+        print('lecturer_2 {a} {b}'.format(a=lecturer_1[0], b=lecturer_1[1]))
+
         year = int(request.POST.get('year'))
         semester = int(request.POST.get('semester'))
         resp = request.POST.get('response')
@@ -169,29 +166,27 @@ def add_a_response(request):
             except:
                 c['message'] = 'The course doesn\'t exist.'
                 return render_to_response("rate/add_a_response.html", c)
-
-            try:
-                l = Lecturer.objects.get(first_name=lecturer_1[0], last_name=lecturer_1[1])
-                print('lecturer_2 {a} {b}'.format(a=lecturer_2[0], b=lecturer_2[1]))
-                if lecturer_2[0].lower() != 'none':
-                    try:
-                        l2 = Lecturer.objects.get(first_name=lecturer_2[0], last_name=lecturer_2[1])
-                        rating = Rating.create(year=year, semester=semester, lecturer_1=l, lecturer_2=l2, course=cs, text=resp)
-                        return HttpResponseRedirect('/')
-                    except:
-                        c['message'] = 'Your second lecturer doesn\'t exist.'
-                        return render_to_response("rate/add_a_response.html", c)
-                else:
-                    rating = Rating.create(year=year,
-                                           semester=semester,
-                                           lecturer_1=l,
-                                           lecturer_2=None,
-                                           course=cs,
-                                           text=resp)
+            # try:
+            l = Lecturer.objects.get(first_name=lecturer_1[0], last_name=lecturer_1[1])
+            if lecturer_2[0].lower() != 'none':
+                try:
+                    l2 = Lecturer.objects.get(first_name=lecturer_2[0], last_name=lecturer_2[1])
+                    rating = Rating.create(year=year, semester=semester, lecturer_1=l, lecturer_2=l2, course=cs, text=resp)
                     return HttpResponseRedirect('/')
-            except:
-                c['message'] = 'Your first lecturer doesn\'t exist.'
-                return render_to_response("rate/add_a_response.html", c)
+                except:
+                    c['message'] = 'Your second lecturer doesn\'t exist.'
+                    return render_to_response("rate/add_a_response.html", c)
+            else:
+                rating = Rating.create(year=year,
+                                       semester=semester,
+                                       lecturer_1=l,
+                                       lecturer_2=None,
+                                       course=cs,
+                                       text=resp)
+                return HttpResponseRedirect('/')
+            # except:
+            #     c['message'] = 'Your first lecturer doesn\'t exist.'
+            #     return render_to_response("rate/add_a_response.html", c)
     elif request.method == 'GET':
         return render_to_response("rate/add_a_response.html", c)
 
