@@ -9,7 +9,7 @@ class Lecturer(models.Model):
     def create(cls, first_name, last_name):
         return cls(first_name=first_name, last_name=last_name)
 
-class Class(models.Model):
+class Course(models.Model):
     initials = models.CharField(max_length=200)
     title = models.CharField(max_length=200)
 
@@ -22,6 +22,7 @@ class Rating(models.Model):
     month = models.IntegerField()
     day = models.IntegerField()
     lecturer = models.ManyToManyField(Lecturer)
+    course = models.ManyToManyField(Course)
 
     @classmethod
     def create(cls, year, month, day, lecturer):

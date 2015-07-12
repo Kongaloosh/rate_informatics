@@ -1,10 +1,30 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
+{% extends "rate/base.html" %}
+{% block body %}
+    <div class="jumbotron">
+        <h2>Add a Course</h2>
+        <form>
+            <div class="form-group lecturer">
+                <label for="inputName">First Name</label>
+                <input type="name" class="form-control" id="inputName" placeholder="ie. Marvin">
+            </div>
 
-</body>
-</html>
+            <div class="form-group course">
+                <label for="inputSurname">Last Name</label>
+                <input type="initials" class="form-control" id="inputSurname" placeholder="ie. Spogwurst">
+            </div>
+
+            <div class="form-group response">
+                <label for="inputResponse">Last Name</label>
+                <p>Think about answering how the coursework was, what the lectures were like, how available
+                the lecturers were, and whether or not the tutorials were relevant.</p>
+                <textarea type="initials"
+                       class="form-control"
+                       rows="5"
+                       id="inputResponse"
+                       placeholder="Be Nice."></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary">submit</button>
+        </form>
+    </div>
+{% endblock %}
