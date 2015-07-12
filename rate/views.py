@@ -19,3 +19,4 @@ def add_a_lecturer(request):
 
 def add_a_response(request):
     return render(request, "rate/add_a_response.html")
+

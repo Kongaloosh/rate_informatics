@@ -2,6 +2,9 @@
 {% block body %}
     <div class="jumbotron">
         <h2>Add a Course</h2>
+
+
+
         <form> <!-- Submission form -->
             <div class="form-group response"> <!-- Response -->
                 {% if courses %}
@@ -10,12 +13,12 @@
                             <span data-bind="label">Select One</span>&nbsp;<span class="caret"></span>
                         </button>
 
-                        <ul class="dropdown-menu" role="menu">
+                        <select class="dropdown-menu" role="menu">
                             {% for course in courses %}
-                                <li><a href="#">{{ course | safe }}</a></li>
+                                <option><a href="#">{{ course | safe }}</a></option>
                             {% endfor %}
-                        </ul>
-                       </div>  <!-- End Course Selection -->
+                        </select>
+                    </div>  <!-- End Course Selection -->
 
                     {% else %}
                         <p> There are no courses in our system. <a href="/c/add/">add some?</a></p>
@@ -29,12 +32,12 @@
                        <span data-bind="label">Select One</span>&nbsp;<span class="caret"></span>
                      </button>
 
-                        <ul class="dropdown-menu" role="menu">
+                        <select class="dropdown-menu" role="menu">
                            {% for lecturer in lecturers %}
-                                <li><a href="#">{{ lecturer | safe }}</a></li>
+                                <option><a href="#">{{ lecturer | safe }}</a></option>
                             {% endfor %}
-                         </ul>
-                    </div>  <!-- End Lecturer Selection -->
+                        </select>  <!-- End Lecturer Selection -->
+                    </div>
                     {% else %}
                         <p> There are no lecturers in our system. <a href="/l/add/">add one?</a></p>
                     {% endif %}
