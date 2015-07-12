@@ -142,6 +142,9 @@ def add_a_response(request):
         lecturer_1 = request.POST.get('lecturer_1').split('_')
         lecturer_2 = request.POST.get('lecturer_2').split('_')
 
+        if lecturer_1 == lecturer_2:
+            lecturer_2 = None
+
         print('lecturer_2 {a} {b}'.format(a=lecturer_2[0], b=""))
         print('lecturer_2 {a} {b}'.format(a=lecturer_1[0], b=lecturer_1[1]))
 
