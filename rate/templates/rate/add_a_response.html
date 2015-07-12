@@ -2,24 +2,45 @@
 {% block body %}
     <div class="jumbotron">
         <h2>Add a Course</h2>
-        <form>
-               <div class="btn-group">
-                 <button type="button" class="btn btn-default dropdown-toggle form-control" data-toggle="dropdown">
-                   <span data-bind="label">Select One</span>&nbsp;<span class="caret"></span>
-                 </button>
-                 <ul class="dropdown-menu" role="menu">
-                   <li><a href="#">Item 1</a></li>
-                   <li><a href="#">Another item</a></li>
-                   <li><a href="#">This is a longer item that will not fit properly</a></li>
-                 </ul>
-               </div>
+        <form> <!-- Submission form -->
+            <div class="form-group response"> <!-- Response -->
+                {% if courses %}
+                    <div class="btn-group"> <!-- Course Selector -->
+                         <button type="button" class="btn btn-default dropdown-toggle form-control" data-toggle="dropdown">
+                            <span data-bind="label">Select One</span>&nbsp;<span class="caret"></span>
+                        </button>
 
-            <div class="form-group course">
-                <label for="inputSurname">Last Name</label>
-                <input type="initials" class="form-control" id="inputSurname" placeholder="ie. Spogwurst">
+                        <ul class="dropdown-menu" role="menu">
+                            {% for course in courses %}
+                                <li><a href="#">{{ course | safe }}</a></li>
+                            {% endfor %}
+                        </ul>
+                       </div>  <!-- End Course Selection -->
+
+                    {% else %}
+                        <p> There are no courses in our system. <a href="/c/add/">add some?</a></p>
+                    {% endif %}
+            </div>
+            <div class="form-group response"> <!-- Response -->
+                {% if lecturers %}
+
+                    <div class="btn-group"> <!-- Lecturer Selector -->
+                     <button type="button" class="btn btn-default dropdown-toggle form-control" data-toggle="dropdown">
+                       <span data-bind="label">Select One</span>&nbsp;<span class="caret"></span>
+                     </button>
+
+                        <ul class="dropdown-menu" role="menu">
+                           {% for lecturer in lecturers %}
+                                <li><a href="#">{{ lecturer | safe }}</a></li>
+                            {% endfor %}
+                         </ul>
+                    </div>  <!-- End Lecturer Selection -->
+                    {% else %}
+                        <p> There are no lecturers in our system. <a href="/l/add/">add one?</a></p>
+                    {% endif %}
             </div>
 
-            <div class="form-group response">
+            <div class="form-group response"> <!-- Response -->
                 <label for="inputResponse">Last Name</label>
                 <p>Think about answering how the coursework was, what the lectures were like, how available
                 the lecturers were, and whether or not the tutorials were relevant.</p>
@@ -28,9 +49,9 @@
                        rows="5"
                        id="inputResponse"
                        placeholder="Be Nice."></textarea>
-            </div>
+            </div> <!-- End Response -->
 
             <button type="submit" class="btn btn-primary">submit</button>
-        </form>
+        </form> <!-- End Form -->
     </div>
 {% endblock %}
