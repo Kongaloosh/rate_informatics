@@ -1,10 +1,14 @@
 {% extends "rate/base.html" %}
 {% block body %}
+<div class="jumbotron">
     {% if lecturers %}
+    <ul>
         {% for lecturer in lecturers %}
-            {{lecturer.first_name}} {{lecturer.last_name}}
+        <li><a href="l/{{lecturer.first_name}}_{{lecturer.last_name}}">{{lecturer.first_name}} {{lecturer.last_name}}</a></li>
         {% endfor %}
+    </ul>
     {% else %}
-        No one exists!
+        <h2>No one exists! Why don't you <a href="/l/add">add a person</a>!s</h2>
     {% endif %}
+</div>
 {% endblock %}
