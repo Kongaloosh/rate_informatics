@@ -65,7 +65,14 @@ def add_a_course(request):
 
 
 def lecturer(request, first_name, last_name):
-    c = {'lecturer': Lecturer.objects.get(first_name=first_name.title(), last_name=last_name.title())}
+    try:
+        c = {'lecturer': Lecturer.objects.get(first_name=first_name.title(), last_name=last_name.title())}
+        c['taught_courses'] = Rating.objects.filter(lecturer=c['lecturer']).distinct('course')
+    except:
+        c = {'lecturer': None}
+
+    for i in c['taught_courses']:
+        print(i.course.title)
     return render_to_response('rate/lecturer.html', c)
 
 

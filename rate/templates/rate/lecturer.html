@@ -1,8 +1,21 @@
 {% extends "rate/base.html" %}
 {% block body %}
-    {% if lecturer %}
-        {{lecturer.first_name}} {{lecturer.last_name}}
-    {% else %}
-        This person doesn't exist!
-    {% endif %}
+    <div class="jumbotron">
+        {% if lecturer %}
+            <h1>{{lecturer.first_name}} {{lecturer.last_name}}</h1>
+            <div>
+                {% for course in taught_courses%}
+                    <ul>
+                        <li>
+                            <div>
+                                <h2>{{ course.initials | safe }} | {{course.title | safe }}</h2>
+                            </div>
+                        </li>
+                    </ul>
+                {% endfor %}
+            </div>
+        {% else %}
+            <h2>This person doesn't exist! You could <a href="/l/add/">add them</a> if you wanted.</h2>
+        {% endif %}
+    </div>
 {% endblock %}

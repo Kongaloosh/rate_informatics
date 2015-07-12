@@ -24,7 +24,7 @@ class Rating(models.Model):
     semester = models.IntegerField()
     rating = models.TextField(max_length=1000)
     lecturer = models.ManyToManyField(Lecturer)
-    course = models.ManyToManyField(Course)
+    course = models.ForeignKey(Course)
 
     @classmethod
     def create(cls, year, semester, lecturer, course, text):

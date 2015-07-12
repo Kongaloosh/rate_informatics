@@ -5,7 +5,7 @@
         {% if message %}
             {{message}}
         {% endif %}
-        <form action="/r/add" method="post"> <!-- Submission form -->
+        <form action="/r/add/" method="post"> <!-- Submission form -->
             {% csrf_token %}
             <div class="form-group response"> <!-- Course -->
                 {% if courses %}
@@ -19,10 +19,10 @@
                                 </option>
                             {% endfor %}
                             </select>
-                            <p> Don't see the course you want? <a href="/c/add">Add it!</a></p>
+                            <p> Don't see the course you want? <a href="/c/add/">Add it!</a></p>
                         </div>
                     {% else %}
-                        <p> There are no courses in our system. <a href="/c/add">add one?</a></p>
+                        <p> There are no courses in our system. <a href="/c/add/">add one?</a></p>
                     {% endif %}
             </div> <!-- End Course -->
 
@@ -38,10 +38,10 @@
                                 </option>
                             {% endfor %}
                             </select>
-                            <p> Don't see the lecturer you want? <a href="/l/add">Add them!</a></p>
+                            <p> Don't see the lecturer you want? <a href="/l/add/">Add them!</a></p>
                         </div>
                     {% else %}
-                        <p> There are no lecturers in our system. <a href="/l/add">add one?</a></p>
+                        <p> There are no lecturers in our system. <a href="/l/add/">add one?</a></p>
                     {% endif %}
             </div> <!-- End Lecturer 1 -->
 
@@ -60,7 +60,7 @@
                             </select>
                         </div>
                     {% else %}
-                        <p> There are no lecturers in our system. <a href="/l/add">add one?</a></p>
+                        <p> There are no lecturers in our system. <a href="/l/add/">add one?</a></p>
                     {% endif %}
             </div> <!-- End Lecturer 2 -->
 

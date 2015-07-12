@@ -5,7 +5,7 @@
         {% if message %}
             {{message}}
         {% endif %}
-        <form action="/l/add" method="post" >
+        <form action="/l/add/" method="post" >
             {% csrf_token %}
             <div class="form-group">
                 <label for="inputName">First Name</label>
