@@ -21,12 +21,12 @@ class Course(models.Model):
 
 class Rating(models.Model):
     year = models.IntegerField()
-    month = models.IntegerField()
-    day = models.IntegerField()
+    semester = models.IntegerField()
     lecturer = models.ManyToManyField(Lecturer)
     course = models.ManyToManyField(Course)
+    response = models.TextField(max_length=1000)
 
     @classmethod
-    def create(cls, year, month, day, lecturer):
-        if(isinstance(year, int) and isinstance(month, int) and isinstance(day, int)):
-            return cls(year=year, month=month, day=day, lecturer=lecturer)
+    def create(cls, year, semester, lecturer, text):
+        if(isinstance(year, int) and isinstance(semester, int)):
+            return cls(year=year, semester=semester, lecturer=lecturer, reponse=text)

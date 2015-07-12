@@ -1,14 +1,18 @@
 {% extends "rate/base.html" %}
 {% block body %}
     <div class="jumbotron">
-        <h2>Add a Course</h2>
-        <form> <!-- Submission form -->
-
+        <h2>Add a Response</h2>
+        {% if message %}
+            {{message}}
+        {% endif %}
+        <form action="/r/add" method="post"> <!-- Submission form -->
+            {% csrf_token %}
             <div class="form-group response"> <!-- Course -->
                 {% if courses %}
                     <label class="control-label">Course:</label>
                         <div class="">
-                            <select class="form-control">
+                            <select class="form-control"
+                                    name="course">
                             {% for course in courses %}
                                 <option value="{{course.initials}}">
                                     {{course.initials | safe}}
@@ -25,7 +29,8 @@
                 {% if lecturers %}
                     <label class="control-label">Lecturer 1:</label>
                         <div class="">
-                            <select class="form-control">
+                            <select class="form-control"
+                                    name="lecturer_1">
                             {% for lecturer in lecturers %}
                                 <option value="{{ lecturer.first_name | safe }}_{{ lecturer.last_name | safe }}">
                                     {{ lecturer.first_name | safe }} {{ lecturer.last_name | safe }}
@@ -42,7 +47,8 @@
                 {% if lecturers %}
                     <label class="control-label">Lecturer 2:</label>
                         <div class="">
-                            <select class="form-control">
+                            <select class="form-control"
+                                    name="lecturer_2">
                                 <option value="None">Only one lecturer</option>
                                 {% for lecturer in lecturers %}
                                 <option value="{{ lecturer.first_name | safe }}_{{ lecturer.last_name | safe }}">
@@ -56,6 +62,27 @@
                     {% endif %}
             </div> <!-- End Lecturer 2 -->
 
+            <div class="form-group response"> <!-- Year Sat -->
+                <label for="year">Year Sat:</label>
+                <input type="initials"
+                       class="form-control"
+                       rows="5"
+                       id="year"
+                       name="year"
+                       placeholder="ie. 2015"/>
+            </div> <!-- End Year Sat -->
+
+            <div class="form-group response"> <!-- Semseter Sat -->
+                <label class="control-label">Semester:</label>
+                <div class="">
+                    <select class="form-control"
+                            name="semester">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                    </select>
+                </div>
+            </div> <!-- End Semseter -->
+
             <div class="form-group response"> <!-- Response -->
                 <label for="inputResponse">Last Name</label>
                 <p>Think about answering how the coursework was, what the lectures were like, how available
@@ -64,6 +91,7 @@
                        class="form-control"
                        rows="5"
                        id="inputResponse"
+                       name="response"
                        placeholder="Be Nice."></textarea>
             </div> <!-- End Response -->
 

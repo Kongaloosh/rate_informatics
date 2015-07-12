@@ -14,4 +14,6 @@ class CourseForm(forms.Form):
 
 
 class ResponseForm(forms.Form):
-    lecturer_name = forms.CharField(label='Lecturer', max_length=100)
+    response = forms.CharField(label='Lecturer', max_length=100)
+    semester = forms.IntegerField()
+    year = forms.IntegerField()
