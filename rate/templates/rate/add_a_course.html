@@ -2,16 +2,27 @@
 {% block body %}
 <div class="jumbotron" xmlns="http://www.w3.org/1999/html">
         <h2>Add a Course</h2>
-        <form action="/c/add/" method="post" >
+        {% if message %}
+            {{message}}
+        {% endif %}
+        <form action="/c/add" method="post" >
             {% csrf_token %}
             <div class="form-group">
                 <label for="inputName">Course Name</label>
-                <input type="name" class="form-control" id="inputName" placeholder="ie. Agents and Reasoning">
+                <input type="name"
+                       class="form-control"
+                       name="inputName"
+                       id="inputName"
+                       placeholder="ie. Agents and Reasoning">
             </div>
 
             <div class="form-group">
                 <label for="inputInitials">Course Initials</label>
-                <input type="initials" class="form-control" id="inputInitials" placeholder="ie. IAML, DBS, INF2B">
+                <input type="initials"
+                       class="form-control"
+                       name="inputInitials"
+                       id="inputInitials"
+                       placeholder="ie. IAML, DBS, INF2B">
             </div>
 
             <input type="submit" class="btn btn-primary" value="add"/>

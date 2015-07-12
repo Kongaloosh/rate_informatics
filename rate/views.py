@@ -2,6 +2,11 @@ from django.shortcuts import render, HttpResponse, HttpResponseRedirect, render_
 from django.core.context_processors import csrf #protects from people spoofing authentication requests
 from forms import *
 from models import *
+import logging
+
+
+logger = logging.getLogger(__name__)
+
 
 def index(request):
     return render(request, "rate/index.html")
@@ -24,20 +29,38 @@ def courses(request):
 def add_a_course(request):
     c = {}
     if request.method == 'POST':
-        # create a form instance and populate it with data from the request:
-        form = CourseForm(request.POST)
+        form = CourseForm(request.POST)     # create a form instance from request
+        title = request.POST.get('inputName')
+        initials = request.POST.get('inputInitials')
+        if title and initials:
 
-        # check whether it's valid:
-        if form.is_valid():
-            course = Course.create(form.cleaned_data['inputInitials'], form.cleaned_data['inputName'])
-            course.save()
+            try:
+                obj = Course.objects.get(title=title)
+                c.update(csrf(request))
+                c['message'] = 'A course with this title exists.'
+                return render_to_response("rate/add_a_course.html", c)
+            except:
+                pass
+
+            try:
+                obj = Course.objects.get(initials=initials)
+                c.update(csrf(request))
+                c['message'] = 'A course with these initials exists.'
+                return render_to_response("rate/add_a_course.html", c)
+            except:
+                pass
+
+            course_form = Course.create(title=title, initials=initials)
+            course_form.save()
+            logger.debug(course_form.initials)
             return HttpResponseRedirect('/')
         else:
-            return HttpResponseRedirect('/')
+            c.update(csrf(request))
+            c['message'] = 'your form was invalid'
+            return render_to_response("rate/add_a_course.html", c)
     # if a GET (or any other method) we'll create a blank form
     elif request.method == 'GET':
         c.update(csrf(request))
-        print(c)
         return render_to_response("rate/add_a_course.html", c)
 
 
