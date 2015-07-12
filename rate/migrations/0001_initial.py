@@ -33,7 +33,7 @@ class Migration(migrations.Migration):
                 ('year', models.IntegerField()),
                 ('semester', models.IntegerField()),
                 ('rating', models.TextField(max_length=1000)),
-                ('course', models.ManyToManyField(to='rate.Course')),
+                ('course', models.ForeignKey(to='rate.Course')),
                 ('lecturer', models.ManyToManyField(to='rate.Lecturer')),
             ],
         ),

@@ -1,5 +1,6 @@
 {% extends "rate/base.html" %}
 {% block body %}
+<div class="container">
     <div class="jumbotron">
         {% if courses %}
         <ul>
@@ -9,6 +10,6 @@
         </ul>
         {% else %}
         <h2>No courses exist! Why don't you <a href="/c/add/">add one</a></h2>
-    {% endif %}
-    </div>
+        {% endif %}
+    </div></div>
 {% endblock %}

@@ -29,10 +29,8 @@ class Rating(models.Model):
     @classmethod
     def create(cls, year, semester, lecturer, course, text):
         if(isinstance(year, int) and isinstance(semester, int)):
-            a = cls(year=year, semester=semester, rating=text)
+            a = cls(year=year, semester=semester, course=course, rating=text)
             a.save()
             a.lecturer.add(lecturer)
-            a.save()
-            a.course.add(course)
             a.save()
             return a

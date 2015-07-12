@@ -1,67 +1,68 @@
 {% extends "rate/base.html" %}
 {% block body %}
+<div class="container">
     <div class="jumbotron">
         <h2>Add a Response</h2>
         {% if message %}
-            {{message}}
+        {{message}}
         {% endif %}
         <form action="/r/add/" method="post"> <!-- Submission form -->
             {% csrf_token %}
             <div class="form-group response"> <!-- Course -->
                 {% if courses %}
-                    <label class="control-label">Course:</label>
-                        <div class="">
-                            <select class="form-control"
-                                    name="course">
-                            {% for course in courses %}
-                                <option value="{{course.initials}}">
-                                    {{course.initials | safe}}
-                                </option>
-                            {% endfor %}
-                            </select>
-                            <p> Don't see the course you want? <a href="/c/add/">Add it!</a></p>
-                        </div>
-                    {% else %}
-                        <p> There are no courses in our system. <a href="/c/add/">add one?</a></p>
-                    {% endif %}
+                <label class="control-label">Course:</label>
+                <div class="">
+                    <select class="form-control"
+                            name="course">
+                        {% for course in courses %}
+                        <option value="{{course.initials}}">
+                            {{course.initials | safe}}
+                        </option>
+                        {% endfor %}
+                    </select>
+                    <p> Don't see the course you want? <a href="/c/add/">Add it!</a></p>
+                </div>
+                {% else %}
+                <p> There are no courses in our system. <a href="/c/add/">add one?</a></p>
+                {% endif %}
             </div> <!-- End Course -->
 
             <div class="form-group response"> <!-- Lecturer 1 -->
                 {% if lecturers %}
-                    <label class="control-label">Lecturer 1:</label>
-                        <div class="">
-                            <select class="form-control"
-                                    name="lecturer_1">
-                            {% for lecturer in lecturers %}
-                                <option value="{{ lecturer.first_name | safe }}_{{ lecturer.last_name | safe }}">
-                                    {{ lecturer.first_name | safe }} {{ lecturer.last_name | safe }}
-                                </option>
-                            {% endfor %}
-                            </select>
-                            <p> Don't see the lecturer you want? <a href="/l/add/">Add them!</a></p>
-                        </div>
-                    {% else %}
-                        <p> There are no lecturers in our system. <a href="/l/add/">add one?</a></p>
-                    {% endif %}
+                <label class="control-label">Lecturer 1:</label>
+                <div class="">
+                    <select class="form-control"
+                            name="lecturer_1">
+                        {% for lecturer in lecturers %}
+                        <option value="{{ lecturer.first_name | safe }}_{{ lecturer.last_name | safe }}">
+                            {{ lecturer.first_name | safe }} {{ lecturer.last_name | safe }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                    <p> Don't see the lecturer you want? <a href="/l/add/">Add them!</a></p>
+                </div>
+                {% else %}
+                <p> There are no lecturers in our system. <a href="/l/add/">add one?</a></p>
+                {% endif %}
             </div> <!-- End Lecturer 1 -->
 
             <div class="form-group response"> <!-- Lecturer 2 -->
                 {% if lecturers %}
-                    <label class="control-label">Lecturer 2:</label>
-                        <div class="">
-                            <select class="form-control"
-                                    name="lecturer_2">
-                                <option value="None">Only one lecturer</option>
-                                {% for lecturer in lecturers %}
-                                <option value="{{ lecturer.first_name | safe }}_{{ lecturer.last_name | safe }}">
-                                    {{ lecturer.first_name | safe }} {{ lecturer.last_name | safe }}
-                                </option>
-                            {% endfor %}
-                            </select>
-                        </div>
-                    {% else %}
-                        <p> There are no lecturers in our system. <a href="/l/add/">add one?</a></p>
-                    {% endif %}
+                <label class="control-label">Lecturer 2:</label>
+                <div class="">
+                    <select class="form-control"
+                            name="lecturer_2">
+                        <option value="None">Only one lecturer</option>
+                        {% for lecturer in lecturers %}
+                        <option value="{{ lecturer.first_name | safe }}_{{ lecturer.last_name | safe }}">
+                            {{ lecturer.first_name | safe }} {{ lecturer.last_name | safe }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                {% else %}
+                <p> There are no lecturers in our system. <a href="/l/add/">add one?</a></p>
+                {% endif %}
             </div> <!-- End Lecturer 2 -->
 
             <div class="form-group response"> <!-- Year Sat -->
@@ -96,14 +97,15 @@
                     <li>Were the tutorials helpful?</li>
                 </ul>
                 <textarea type="initials"
-                       class="form-control"
-                       rows="5"
-                       id="inputResponse"
-                       name="response"
-                       placeholder="Be Nice."></textarea>
+                          class="form-control"
+                          rows="5"
+                          id="inputResponse"
+                          name="response"
+                          placeholder="Be Nice."></textarea>
             </div> <!-- End Response -->
             <p>max 1000 chars.</p>
             <button type="submit" class="btn btn-primary">submit</button>
         </form> <!-- End Form -->
     </div>
+</div>
 {% endblock %}

@@ -1,9 +1,10 @@
 {% extends "rate/base.html" %}
 {% block body %}
-<div class="jumbotron" xmlns="http://www.w3.org/1999/html">
+<div class="container">
+    <div class="jumbotron" xmlns="http://www.w3.org/1999/html">
         <h2>Add a Course</h2>
         {% if message %}
-            {{message}}
+        {{message}}
         {% endif %}
         <form action="/c/add/" method="post" >
             {% csrf_token %}
@@ -28,4 +29,5 @@
             <input type="submit" class="btn btn-primary" value="add"/>
         </form>
     </div>
+</div>
 {% endblock %}
