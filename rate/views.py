@@ -11,3 +11,8 @@ def about(request):
 
 def add_a_course(request):
     return render(request, "rate/add_a_course.html")
+
+
+def add_a_lecturer(request):
+    return render(request, "rate/add_a_lecturer.html")
+
