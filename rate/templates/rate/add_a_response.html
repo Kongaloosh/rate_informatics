@@ -19,9 +19,10 @@
                                 </option>
                             {% endfor %}
                             </select>
+                            <p> Don't see the course you want? <a href="/c/add">Add it!</a></p>
                         </div>
                     {% else %}
-                        <p> There are no lecturers in our system. <a href="/l/add/">add one?</a></p>
+                        <p> There are no courses in our system. <a href="/c/add">add one?</a></p>
                     {% endif %}
             </div> <!-- End Course -->
 
@@ -37,9 +38,10 @@
                                 </option>
                             {% endfor %}
                             </select>
+                            <p> Don't see the lecturer you want? <a href="/l/add">Add them!</a></p>
                         </div>
                     {% else %}
-                        <p> There are no lecturers in our system. <a href="/l/add/">add one?</a></p>
+                        <p> There are no lecturers in our system. <a href="/l/add">add one?</a></p>
                     {% endif %}
             </div> <!-- End Lecturer 1 -->
 
@@ -58,7 +60,7 @@
                             </select>
                         </div>
                     {% else %}
-                        <p> There are no lecturers in our system. <a href="/l/add/">add one?</a></p>
+                        <p> There are no lecturers in our system. <a href="/l/add">add one?</a></p>
                     {% endif %}
             </div> <!-- End Lecturer 2 -->
 
@@ -85,8 +87,13 @@
 
             <div class="form-group response"> <!-- Response -->
                 <label for="inputResponse">Last Name</label>
-                <p>Think about answering how the coursework was, what the lectures were like, how available
-                the lecturers were, and whether or not the tutorials were relevant.</p>
+                <p>Things to think about...</p>
+                <ul>
+                    <li>How was the coursework?</li>
+                    <li>What were the lectures like?</li>
+                    <li>How easy was it to talk to the lecturers?</li>
+                    <li>Were the tutorials helpful?</li>
+                </ul>
                 <textarea type="initials"
                        class="form-control"
                        rows="5"

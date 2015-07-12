@@ -109,8 +109,8 @@ def add_a_response(request):
     c['message'] = None
     if request.method == 'POST':
         course_initials = request.POST.get('course')
-        lecturer_1 = request.POST.get('lecturer_1').split(' ')
-        lecturer_2 = request.POST.get('lecturer_2').split(' ')
+        lecturer_1 = request.POST.get('lecturer_1').split('_')
+        lecturer_2 = request.POST.get('lecturer_2').split('_')
         year = int(request.POST.get('year'))
         semester = int(request.POST.get('semester'))
         resp = request.POST.get('response')
@@ -127,8 +127,6 @@ def add_a_response(request):
 
             if c['message']:
                     return render_to_response("rate/add_a_response.html", c)
-            cs = None
-
             try:
                 cs = Course.objects.get(initials=course_initials)
             except:
@@ -137,17 +135,19 @@ def add_a_response(request):
 
             try:
                 l = Lecturer.objects.get(first_name=lecturer_1[0], last_name=lecturer_1[1])
+                print(l)
                 rating = Rating.create(year=year, semester=semester, lecturer=l, course=cs, text=resp)
-                rating.save()
+
                 if lecturer_2[0].lower() != 'none':
                     try:
                         l = Lecturer.objects.get(first_name=lecturer_2[0], last_name=lecturer_2[1])
                         rating = Rating.create(year=year, semester=semester, lecturer=l, course=cs, text=resp)
-                        rating.save()
                         return HttpResponseRedirect('/')
                     except:
                         c['message'] = 'Your second lecturer doesn\'t exist.'
                         return render_to_response("rate/add_a_response.html", c)
+                else:
+                    return HttpResponseRedirect('/')
             except:
                 c['message'] = 'Your first lecturer doesn\'t exist.'
                 return render_to_response("rate/add_a_response.html", c)
