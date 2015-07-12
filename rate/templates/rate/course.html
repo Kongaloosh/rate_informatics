@@ -1,8 +1,97 @@
 {% extends "rate/base.html" %}
 {% block body %}
-    {% if course %}
-        {{course.title}}
-    {% else %}
-        This course doesn't exist!
-    {% endif %}
+{% if course %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <p class="lead">{{course.title}}</p>
+            <div class="list-group">
+                {% for year in course_history %}
+                <a href="#{{year.year | safe}}" class="list-group-item">
+                    {{year.year | safe}}
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="col-md-9">
+            <div class="thumbnail row">
+                <div class="caption-full">
+                    <h4>
+                        <a href="#">Sample recommendations</a>
+                    </h4>
+                </div>
+
+                {% for selection in course_history %}
+                <div class="span12">
+                    <div class="text col-md-9">
+                        <strong>{{selection.lecturer_1.first_name}} {{selection.lecturer_1.last_name}}</strong>
+                        &
+                        <strong>{{selection.lecturer_2.first_name}} {{selection.lecturer_2.last_name}}</strong>
+                        <p>{{selection.rating}}</p>
+                    </div>
+
+                    <div class="timing col-md-3">
+                        <p class="pull-right">Semester {{selection.semester}}</p>
+                        <p class="pull-right">{{selection.year}}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            {% for review in reviews %}
+            <div class="well">
+                <a name="{{review.0.year}}"></a>
+                <h3><a href="/course/{{review.0.course.initials}}">{{review.0.year}}</a></h3>
+                <h4>
+                    <strong>
+                        <a href="/l/{{review.0.lecturer_1.first_name}}_{{review.0.lecturer_1.last_name}}">
+                            {{review.0.lecturer_1.first_name}} {{review.0.lecturer_1.last_name}}
+                        </a>
+                    </strong>
+                        &
+                    <strong>
+                        <a href="/l/{{review.0.lecturer_2.first_name}}_{{review.0.lecturer_2.last_name}}">
+                            {{review.0.lecturer_2.first_name}} {{review.0.lecturer_2.last_name}}
+                        </a>
+                    </strong>
+                </h4>
+                <hr>
+                {% for element in review %}
+                <div class="row">
+                    <div class="col-md-12">
+                        <span class="pull-right">semester {{element.semester}}</span>
+                        <span class="pull-right">{{element.year}}</span>
+                        <p>{{element.rating | safe}}</p>
+                    </div>
+                </div>
+                <hr>
+                {% endfor %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<!-- /.container -->
+
+<div class="container">
+
+    <hr>
+
+    <!-- Footer -->
+    <footer>
+        <div class="row">
+            <div class="col-lg-12">
+                <p>Copyright &copy; Your Website 2014</p>
+            </div>
+        </div>
+    </footer>
+
+</div>
+
+{% else %}
+<div class="container">
+    <h2>This class doesn't exist! You could <a href="/c/add/">add it</a> if you wanted.</h2>
+</div>
+{% endif %}
 {% endblock %}

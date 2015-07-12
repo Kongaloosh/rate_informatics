@@ -4,6 +4,7 @@ from forms import *
 from models import *
 import logging
 from datetime import datetime
+from itertools import chain
 
 
 logger = logging.getLogger(__name__)
@@ -18,7 +19,16 @@ def about(request):
 
 
 def course(request, course_initials):
-    c = {'course': Course.objects.get(initials=course_initials)}
+    try:
+        c = {'course': Course.objects.get(initials=course_initials)}
+        c['course_history'] = Rating.objects.filter(course=c['course']).distinct('year')
+        review = []
+        for i in c['course_history']:
+            review.append(Rating.objects.filter(course=c['course'], year=i.year))
+            c['reviews'] = review
+    except:
+        c = {'course': None}
+
     return render_to_response('rate/course.html', c)
 
 
@@ -67,18 +77,32 @@ def add_a_course(request):
 def lecturer(request, first_name, last_name):
     try:
         c = {'lecturer': Lecturer.objects.get(first_name=first_name.title(), last_name=last_name.title())}
-        c['taught_courses'] = Rating.objects.filter(lecturer=c['lecturer']).distinct('course')
-        review = []
-        for i in c['taught_courses']:
-            review.append(Rating.objects.filter(lecturer=c['lecturer'], course=i.course))
-            c['reviews'] = review
 
     except:
         c = {'lecturer': None}
 
-    for i in c['reviews']:
-        for j in i:
-            print(j.course)
+    a = []
+    b = []
+    try:
+        a = Rating.objects.filter(lecturer_1=c['lecturer']).distinct('course')
+    except:
+        pass
+    try:
+        b = Rating.objects.filter(lecturer_2=c['lecturer']).distinct('course')
+    except:
+        pass
+    c['taught_courses'] = list(chain(a, b))
+
+    review = []
+    for i in c['taught_courses']:
+        try:
+            review.append(Rating.objects.filter(lecturer_1=c['lecturer'], course=i.course))
+        except:pass
+        try:
+            review.append(Rating.objects.filter(lecturer_2=c['lecturer'], course=i.course))
+        except:pass
+        c['reviews'] = review
+
     return render_to_response('rate/lecturer.html', c)
 
 
@@ -148,18 +172,22 @@ def add_a_response(request):
 
             try:
                 l = Lecturer.objects.get(first_name=lecturer_1[0], last_name=lecturer_1[1])
-                print(l)
-                rating = Rating.create(year=year, semester=semester, lecturer=l, course=cs, text=resp)
-
+                print('lecturer_2 {a} {b}'.format(a=lecturer_2[0], b=lecturer_2[1]))
                 if lecturer_2[0].lower() != 'none':
                     try:
-                        l = Lecturer.objects.get(first_name=lecturer_2[0], last_name=lecturer_2[1])
-                        rating = Rating.create(year=year, semester=semester, lecturer=l, course=cs, text=resp)
+                        l2 = Lecturer.objects.get(first_name=lecturer_2[0], last_name=lecturer_2[1])
+                        rating = Rating.create(year=year, semester=semester, lecturer_1=l, lecturer_2=l2, course=cs, text=resp)
                         return HttpResponseRedirect('/')
                     except:
                         c['message'] = 'Your second lecturer doesn\'t exist.'
                         return render_to_response("rate/add_a_response.html", c)
                 else:
+                    rating = Rating.create(year=year,
+                                           semester=semester,
+                                           lecturer_1=l,
+                                           lecturer_2=None,
+                                           course=cs,
+                                           text=resp)
                     return HttpResponseRedirect('/')
             except:
                 c['message'] = 'Your first lecturer doesn\'t exist.'

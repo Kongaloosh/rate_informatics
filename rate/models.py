@@ -23,14 +23,17 @@ class Rating(models.Model):
     year = models.IntegerField()
     semester = models.IntegerField()
     rating = models.TextField(max_length=1000)
-    lecturer = models.ManyToManyField(Lecturer)
+    lecturer_1 = models.ForeignKey(Lecturer, related_name="first_lecturer")
+    lecturer_2 = models.ForeignKey(Lecturer, default=None, related_name="second_lecturer")
     course = models.ForeignKey(Course)
 
     @classmethod
-    def create(cls, year, semester, lecturer, course, text):
-        if(isinstance(year, int) and isinstance(semester, int)):
-            a = cls(year=year, semester=semester, course=course, rating=text)
-            a.save()
-            a.lecturer.add(lecturer)
+    def create(cls, year, semester, lecturer_1, lecturer_2, course, text):
+        if isinstance(year, int) and isinstance(semester, int):
+            a = cls(year=year,
+                    semester=semester,
+                    course=course, rating=text,
+                    lecturer_1=lecturer_1,
+                    lecturer_2=lecturer_2)
             a.save()
             return a

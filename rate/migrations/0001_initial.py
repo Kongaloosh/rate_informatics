@@ -34,7 +34,8 @@ class Migration(migrations.Migration):
                 ('semester', models.IntegerField()),
                 ('rating', models.TextField(max_length=1000)),
                 ('course', models.ForeignKey(to='rate.Course')),
-                ('lecturer', models.ManyToManyField(to='rate.Lecturer')),
+                ('lecturer_1', models.ForeignKey(related_name='first_lecturer', to='rate.Lecturer')),
+                ('lecturer_2', models.ForeignKey(related_name='second_lecturer', default=None, to='rate.Lecturer')),
             ],
         ),
     ]
