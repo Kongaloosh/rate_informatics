@@ -3,13 +3,18 @@
     <div class="jumbotron">
         <h2>Add a Course</h2>
         <form>
-            Name:
-            <input type="text" name="Name">
-            <br>
-            Initials:
-            <input type="text" name="Initials">
-            ie: ADS, IAML, INF2B
+            <div class="form-group">
+                <label for="inputName">Course Name</label>
+                <input type="name" class="form-control" id="inputName" placeholder="ie. Agents and Reasoning">
+            </div>
 
+            <div class="form-group">
+                <label for="inputInitials">Course Initials</label>
+                <input type="initials" class="form-control" id="inputInitials" placeholder="ie. IAML, DBS, INF2B">
+            </div>
+
+
+            <button type="submit" class="btn btn-primary">submit</button>
         </form>
     </div>
 {% endblock %}

@@ -6,6 +6,7 @@ admin.autodiscover()
 urlpatterns = patterns('',
     url(r'^$', index, name='home'),
     url(r'^about$', about, name='about'),
+    url(r'^c/add', add_a_course, name='add_a_course'),
     # Examples:
     # url(r'^$', 'rateinformatics.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
