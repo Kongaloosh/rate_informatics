@@ -5,14 +5,25 @@ class Lecturer(models.Model):
     first_name = models.CharField(max_length=200)
     last_name = models.DateTimeField('date published')
 
+    @classmethod
+    def create(cls, first_name, last_name):
+        return cls(first_name=first_name, last_name=last_name)
 
 class Class(models.Model):
     initials = models.CharField()
     title = models.CharField()
 
+    @classmethod
+    def create(cls, initials, title):
+        return cls(initials=initials.upper(), title=title)
 
 class Rating(models.Model):
     year = models.IntegerField()
     month = models.IntegerField()
     day = models.IntegerField()
-    lecturers = models.ManyToManyField(Lecturer)
+    lecturer = models.ManyToManyField(Lecturer)
+
+    @classmethod
+    def create(cls, year, month, day, lecturer):
+        if(isinstance(year, int) and isinstance(month, int) and isinstance(day, int)):
+            return cls(year=year, month=month, day=day, lecturer=lecturer)
