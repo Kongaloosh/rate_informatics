@@ -13,9 +13,5 @@ urlpatterns = patterns('',
     url(r'^l/(?P<first_name>\w+)_(?P<last_name>\w+)', lecturer, name='lecturer'),
     url(r'^l/add', add_a_lecturer, name='add_a_lecturer'),
     url(r'^r/add', add_a_response, name='add_a_response'),
-    # Examples:
-    # url(r'^$', 'rateinformatics.views.home', name='home'),
-    # url(r'^blog/', include('blog.urls')),
-
     url(r'^admin/', include(admin.site.urls)),
 )

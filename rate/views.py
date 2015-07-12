@@ -60,5 +60,8 @@ def response(request):
 
 
 def add_a_response(request):
-    return render(request, "rate/add_a_response.html")
+    c = {}
+    c.update({'lecturers': Lecturer.objects.all()})
+    c.update({'courses': Course.objects.all()})
+    return render_to_response("rate/add_a_response.html", c)
 
