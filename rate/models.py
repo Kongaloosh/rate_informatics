@@ -3,15 +3,15 @@ from django.db import models
 
 class Lecturer(models.Model):
     first_name = models.CharField(max_length=200)
-    last_name = models.DateTimeField('date published')
+    last_name = models.CharField(max_length=200)
 
     @classmethod
     def create(cls, first_name, last_name):
         return cls(first_name=first_name, last_name=last_name)
 
 class Class(models.Model):
-    initials = models.CharField()
-    title = models.CharField()
+    initials = models.CharField(max_length=200)
+    title = models.CharField(max_length=200)
 
     @classmethod
     def create(cls, initials, title):
