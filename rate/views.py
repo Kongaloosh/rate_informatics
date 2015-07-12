@@ -47,7 +47,7 @@ def lecturer(request, first_name, last_name):
 
 
 def lecturers(request):
-    c = {'lecturers': Course.objects.all()}
+    c = {'lecturers': Lecturer.objects.all()}
     return render_to_response('rate/lecturer_list.html', c)
 
 
