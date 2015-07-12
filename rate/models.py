@@ -9,6 +9,7 @@ class Lecturer(models.Model):
     def create(cls, first_name, last_name):
         return cls(first_name=first_name, last_name=last_name)
 
+
 class Course(models.Model):
     initials = models.CharField(max_length=200)
     title = models.CharField(max_length=200)
@@ -16,6 +17,7 @@ class Course(models.Model):
     @classmethod
     def create(cls, initials, title):
         return cls(initials=initials.upper(), title=title)
+
 
 class Rating(models.Model):
     year = models.IntegerField()

@@ -1,0 +1,8 @@
+{% extends "rate/base.html" %}
+{% block body %}
+    {% if course %}
+        {{course.title}}
+    {% else %}
+        This course doesn't exist!
+    {% endif %}
+{% endblock %}

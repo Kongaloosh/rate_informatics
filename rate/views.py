@@ -12,11 +12,14 @@ def about(request):
 
 
 def course(request, course_initials):
-    c = {'courese': Course.objects.get(initials=course_initials)}
-    render_to_response('course.html', c)
+    c = {'course': Course.objects.get(initials=course_initials)}
+    return render_to_response('rate/course.html', c)
+
+
 def courses(request):
     c = {'courses': Course.objects.all()}
     return render_to_response('rate/course_list.html', c)
+
 
 def add_a_course(request):
     c = {}
@@ -36,6 +39,8 @@ def add_a_course(request):
         c.update(csrf(request))
         print(c)
         return render_to_response("rate/add_a_course.html", c)
+
+
 
 
 def add_a_lecturer(request):
