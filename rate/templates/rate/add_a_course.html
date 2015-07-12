@@ -1,8 +1,9 @@
 {% extends "rate/base.html" %}
 {% block body %}
-    <div class="jumbotron">
+<div class="jumbotron" xmlns="http://www.w3.org/1999/html">
         <h2>Add a Course</h2>
-        <form>
+        <form action="/c/add/" method="post" >
+            {% csrf_token %}
             <div class="form-group">
                 <label for="inputName">Course Name</label>
                 <input type="name" class="form-control" id="inputName" placeholder="ie. Agents and Reasoning">
@@ -13,8 +14,7 @@
                 <input type="initials" class="form-control" id="inputInitials" placeholder="ie. IAML, DBS, INF2B">
             </div>
 
-
-            <button type="submit" class="btn btn-primary">submit</button>
+            <input type="submit" class="btn btn-primary" value="add"/>
         </form>
     </div>
 {% endblock %}

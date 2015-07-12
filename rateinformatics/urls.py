@@ -6,6 +6,8 @@ admin.autodiscover()
 urlpatterns = patterns('',
     url(r'^$', index, name='home'),
     url(r'^about$', about, name='about'),
+    url(r'^c/', courses, name='course_list'),
+    url(r'^c/?P<initials>.+', course, name='course')
     url(r'^c/add', add_a_course, name='add_a_course'),
     url(r'^l/add', add_a_lecturer, name='add_a_lecturer'),
     url(r'^r/add', add_a_response, name='add_a_response'),
