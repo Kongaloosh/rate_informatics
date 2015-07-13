@@ -5,11 +5,13 @@
         {% if courses %}
         <ul>
             {% for course in courses %}
-            <li><a href="/course/{{course.initials}}">{{course.title}}</a></li>
+            <h3><li style="list-style-type: none;"><a href="/course/{{course.initials}}">{{course.title}}</a></li></h3>
             {% endfor %}
         </ul>
         {% else %}
         <h2>No courses exist! Why don't you <a href="/c/add/">add one</a></h2>
         {% endif %}
-    </div></div>
+        <p>Don't see the course you want? <a href="/c/add/">Add it!</a></p>
+    </div>
+</div>
 {% endblock %}

@@ -166,6 +166,7 @@ def add_a_response(request):
     c.update({'lecturers': Lecturer.objects.all()})
     c.update({'courses': Course.objects.all()})
     c['message'] = None
+
     if request.method == 'POST':
         course_initials = request.POST.get('course')
         lecturer_1 = request.POST.get('lecturer_1').split('_')
@@ -174,11 +175,12 @@ def add_a_response(request):
         if lecturer_1 == lecturer_2:
             lecturer_2 = None
 
-        year = int(request.POST.get('year'))
-        semester = int(request.POST.get('semester'))
+        year = request.POST.get('year')
+        semester = request.POST.get('semester')
         resp = request.POST.get('response')
 
         if course_initials and lecturer_1 and lecturer_2 and year and semester and resp:
+            year = int(year)
             if semester != 1 and semester != 2:
                 c['message'] = 'That semester doesn\'t exist, nerd.'
             if year > datetime.year:
@@ -189,7 +191,7 @@ def add_a_response(request):
                 c['message'] = 'Could you make your response shorter, please? (1000 char max)'
 
             if c['message']:
-                    return render_to_response("rate/add_a_response.html", c)
+                return render_to_response("rate/add_a_response.html", c)
             try:
                 cs = Course.objects.get(initials=course_initials)
             except:
@@ -216,6 +218,9 @@ def add_a_response(request):
             except:
                 c['message'] = 'Your first lecturer doesn\'t exist.'
                 return render_to_response("rate/add_a_response.html", c)
+        else:
+            c['message'] = 'Your form isn\'t filled in properly.'
+            return render_to_response("rate/add_a_response.html", c)
     elif request.method == 'GET':
         return render_to_response("rate/add_a_response.html", c)
 

@@ -5,11 +5,14 @@
         {% if lecturers %}
         <ul>
             {% for lecturer in lecturers %}
-            <li><a href="l/{{lecturer.first_name}}_{{lecturer.last_name}}">{{lecturer.first_name}} {{lecturer.last_name}}</a></li>
+            <li style="list-style-type: none;"><h3><a href=2l/{{lecturer.first_name}}_{{lecturer.last_name}}">
+                {{lecturer.first_name}} {{lecturer.last_name}}</a></h3></li>
             {% endfor %}
         </ul>
         {% else %}
         <h2>No one exists! Why don't you <a href="/l/add">add a person</a>!s</h2>
         {% endif %}
-    </div></div>
+        <p> Don't see the lecturer you want? <a href="/l/add/">Add them!</a></p>
+    </div>
+</div>
 {% endblock %}
