@@ -5,7 +5,7 @@
         {% if lecturers %}
         <ul>
             {% for lecturer in lecturers %}
-            <li style="list-style-type: none;"><h3><a href="l/{{lecturer.first_name}}_{{lecturer.last_name}}">
+            <li><h3><a href=l/{{lecturer.first_name}}_{{lecturer.last_name}}/>
                 {{lecturer.first_name}} {{lecturer.last_name}}</a></h3></li>
             {% endfor %}
         </ul>

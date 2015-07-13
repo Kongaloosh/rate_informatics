@@ -97,6 +97,8 @@ def add_a_course(request):
     # if a GET (or any other method) we'll create a blank form
     elif request.method == 'GET':
         return render_to_response("rate/add_a_course.html", c)
+
+
 @login_required(login_url='/')
 def lecturer(request, first_name, last_name):
     try:
