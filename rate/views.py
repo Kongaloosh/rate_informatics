@@ -14,6 +14,7 @@ logger = logging.getLogger(__name__)
 def index(request):
     c = {}
     c.update(csrf(request))
+    c.update({'user': request.user})
     if request.method == 'POST':
         username = "user"
         password = request.POST.get('password')

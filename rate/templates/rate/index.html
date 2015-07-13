@@ -7,8 +7,13 @@
         {% endif%}
         <h2>Want to pick courses that suit you?</h2>
         <p>This is a site to aggregate people's experiences in informatics courses.</p>
-        <p>You have to be logged in to be able to submit recommendations.</p>
-        <form action="/" method="post" >
+        {% if user.is_authenticated %}
+            <p>You are currently logged in.</p>
+
+        {% else%}
+            <p>You have to be logged in to be able to submit recommendations.</p>
+
+            <form action="/" method="post" >
             {% csrf_token %}
             <div class="form-group">
                 <label for="password">What tower do I belong to?</label>
@@ -20,7 +25,7 @@
             </div>
             <input type="submit" class="btn btn-primary" value="add"/>
         </form>
-
+        {% endif %}
         <p>Be sure to check out <a href="http://betterinformatics.com/login.php">better informatics</a> and
             <a href="http://gradeatron.tardis.ed.ac.uk/"> the grade-a-tron.</a></p>
     </div>
