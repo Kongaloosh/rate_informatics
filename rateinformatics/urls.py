@@ -5,6 +5,7 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r'^$', index, name='home'),
+    url(r'^logout/$', logout_user, name='logout'),
     url(r'^about$', about, name='about'),
     url(r'^courses/$', courses, name='course_list'),
     url(r'^c/add/$', add_a_course, name='add_a_course'),
@@ -14,6 +15,5 @@ urlpatterns = patterns('',
     url(r'^l/add/$', add_a_lecturer, name='add_a_lecturer'),
     url(r'^r/add/$', add_a_response, name='add_a_response'),
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^logout/$', logout, name='logout')
 )
 
