@@ -9,6 +9,9 @@ class Lecturer(models.Model):
     def create(cls, first_name, last_name):
         return cls(first_name=first_name, last_name=last_name)
 
+    def __str__(self):
+        return "{a} {b}".format(a=self.first_name, b=self.last_name)
+
 
 class Course(models.Model):
     initials = models.CharField(max_length=200)
@@ -17,6 +20,9 @@ class Course(models.Model):
     @classmethod
     def create(cls, initials, title):
         return cls(initials=initials.upper(), title=title)
+
+    def __str__(self):
+        return "{a}".format(a=self.title)
 
 
 class Rating(models.Model):
@@ -46,3 +52,6 @@ class Rating(models.Model):
                     lecturer_2=lecturer_2)
             a.save()
             return a
+
+    def __str__(self):
+        return "{a}".format(a=self.rating[:20])
