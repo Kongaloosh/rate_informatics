@@ -89,7 +89,7 @@ def add_a_course(request):
             course_form = Course.create(title=title, initials=initials)
             course_form.save()
             logger.debug(course_form.initials)
-            return HttpResponseRedirect('/')
+            return HttpResponseRedirect('/r/add')
         else:
             c.update(csrf(request))
             c['message'] = 'your form was invalid'
@@ -97,8 +97,6 @@ def add_a_course(request):
     # if a GET (or any other method) we'll create a blank form
     elif request.method == 'GET':
         return render_to_response("rate/add_a_course.html", c)
-
-
 @login_required(login_url='/')
 def lecturer(request, first_name, last_name):
     try:
@@ -141,7 +139,7 @@ def add_a_lecturer(request):
             except:
                 lecturer_form = Lecturer.create(first_name=first_name, last_name=last_name)
                 lecturer_form.save()
-                return HttpResponseRedirect('/')
+                return HttpResponseRedirect('/r/add')
         else:
             c['message'] = 'your form was invalid'
             return render_to_response("rate/add_a_lecturer.html", c)
