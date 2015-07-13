@@ -31,9 +31,9 @@
                         <p>{{selection.rating}}</p>
                     </div>
 
-                    <div class="timing col-md-3">
-                        <p class="pull-right">Semester {{selection.semester}}</p>
-                        <p class="pull-right">{{selection.year}}</p>
+                    <div class="timing col-md-3 pull-right">
+                        <p>Semester {{selection.semester}}</p>
+                        <p>{{selection.year}}</p>
                     </div>
                 </div>
                 {% endfor %}
@@ -48,10 +48,13 @@
                 <hr>
                 {% for element in review %}
                 <div class="row">
-                    <div class="col-md-12">
-                        <span class="pull-right">semester {{element.semester}}</span>
-                        <span class="pull-right">{{element.year}}</span>
+                    <div class="col-md-9">
                         <p>{{element.rating | safe}}</p>
+                    </div>
+                    <div class="col-md-3 pull-right">
+                        <span>semester {{element.semester}}</span>
+                        <br>
+                        <span>{{element.year}}</span>
                     </div>
                 </div>
                 <hr>

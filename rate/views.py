@@ -1,23 +1,52 @@
 from django.shortcuts import render, HttpResponse, HttpResponseRedirect, render_to_response
 from django.core.context_processors import csrf #protects from people spoofing authentication requests
+from django.contrib.auth import authenticate, logout, login
+from django.contrib.auth.decorators import login_required
 from forms import *
 from models import *
 import logging
 from datetime import datetime
 from itertools import chain
 
-
 logger = logging.getLogger(__name__)
 
 
 def index(request):
-    return render(request, "rate/index.html")
+    c = {}
+    c.update(csrf(request))
+    if request.method == 'POST':
+        username = "user"
+        password = request.POST.get('password')
+        print(password)
+        user = authenticate(username=username, password=password)
+        print(user)
+        if user:
+            if user.is_active:
+                login(request, user)
+                c['message'] = "You are now logged in. You can add information and browse the recommendations."
+            else:
+                c['message'] = "There's something wrong with your account."
+        else:
+            c['message'] = "The password is incorrect."
+        return render_to_response('rate/index.html', c)
+    else:
+        return render_to_response("rate/index.html", c)
 
 
 def about(request):
     return render(request, "rate/about.html")
 
 
+def logout(request):
+    # Handles Logout
+
+    if request.user.is_anonymous():
+        return HttpResponseRedirect(index)
+    else:
+        logout(request)
+        return HttpResponseRedirect(index)
+
+@login_required(login_url='/')
 def course(request, course_initials):
     try:
         c = {'course': Course.objects.get(initials=course_initials)}
@@ -32,11 +61,13 @@ def course(request, course_initials):
     return render_to_response('rate/course.html', c)
 
 
+@login_required(login_url='/')
 def courses(request):
     c = {'courses': Course.objects.all()}
     return render_to_response('rate/course_list.html', c)
 
 
+@login_required(login_url='/')
 def add_a_course(request):
     c = {}
     c.update(csrf(request))
@@ -74,6 +105,7 @@ def add_a_course(request):
         return render_to_response("rate/add_a_course.html", c)
 
 
+@login_required(login_url='/')
 def lecturer(request, first_name, last_name):
     try:
         c = {'lecturer': Lecturer.objects.get(first_name=first_name.title(), last_name=last_name.title())}
@@ -99,11 +131,7 @@ def lecturer(request, first_name, last_name):
     return render_to_response('rate/lecturer.html', c)
 
 
-def lecturers(request):
-    c = {'lecturers': Lecturer.objects.all()}
-    return render_to_response('rate/lecturer_list.html', c)
-
-
+@login_required(login_url='/')
 def add_a_lecturer(request):
     c = {}
     c.update(csrf(request))
@@ -127,10 +155,17 @@ def add_a_lecturer(request):
         return render_to_response("rate/add_a_lecturer.html", c)
 
 
+@login_required(login_url='/')
+def lecturers(request):
+    c = {'lecturers': Lecturer.objects.all()}
+    return render_to_response('rate/lecturer_list.html', c)
+
+
 def response(request):
     pass
 
 
+@login_required(login_url='/')
 def add_a_response(request):
     c = {}
     c.update(csrf(request))
