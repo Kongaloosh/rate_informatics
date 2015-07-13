@@ -200,7 +200,7 @@ def add_a_response(request):
                     try:
                         l2 = Lecturer.objects.get(first_name=lecturer_2[0], last_name=lecturer_2[1])
                         rating = Rating.create(year=year, semester=semester, lecturer_1=l, lecturer_2=l2, course=cs, text=resp)
-                        return HttpResponseRedirect('/')
+                        return HttpResponseRedirect('/course/{initials}'.format(initials = course_initials))
                     except:
                         c['message'] = 'Your second lecturer doesn\'t exist.'
                         return render_to_response("rate/add_a_response.html", c)
@@ -211,7 +211,7 @@ def add_a_response(request):
                                            lecturer_2=None,
                                            course=cs,
                                            text=resp)
-                    return HttpResponseRedirect('/')
+                    return HttpResponseRedirect('/course/{initials}'.format(initials = course_initials))
             except:
                 c['message'] = 'Your first lecturer doesn\'t exist.'
                 return render_to_response("rate/add_a_response.html", c)
