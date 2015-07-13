@@ -176,7 +176,7 @@ def add_a_response(request):
             lecturer_2 = None
 
         year = request.POST.get('year')
-        semester = request.POST.get('semester')
+        semester = int(request.POST.get('semester'))
         resp = request.POST.get('response')
 
         if course_initials and lecturer_1 and lecturer_2 and year and semester and resp:
