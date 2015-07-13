@@ -47,7 +47,7 @@ def course(request, course_initials):
         c['course_history'] = Rating.objects.filter(course=c['course']).distinct('year')
         review = []
         for i in c['course_history']:
-            review.append(Rating.objects.filter(course=c['course'], year=i.year))
+            review.append(Rating.objects.filter(course=c['course'], year=i.year)).group
             c['reviews'] = review
     except:
         c = {'course': None}
@@ -183,7 +183,7 @@ def add_a_response(request):
             year = int(year)
             if semester != 1 and semester != 2:
                 c['message'] = 'That semester doesn\'t exist, nerd.'
-            if year > datetime.year:
+            if year > datetime.now().year:
                 c['message'] = 'That year hasn\'t happened yet, cheeky.'
             if year < 1988:
                 c['message'] = 'The department didn\'t exist then, cheeky.'
