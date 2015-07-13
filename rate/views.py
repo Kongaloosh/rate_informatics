@@ -57,7 +57,7 @@ def course(request, course_initials):
 
 @login_required(login_url='/')
 def courses(request):
-    c = {'courses': Course.objects.all()}
+    c = {'courses': Course.objects.all().order_by('title')}
     return render_to_response('rate/course_list.html', c)
 
 
@@ -151,7 +151,7 @@ def add_a_lecturer(request):
 
 @login_required(login_url='/')
 def lecturers(request):
-    c = {'lecturers': Lecturer.objects.all()}
+    c = {'lecturers': Lecturer.objects.all().order_by('first_name')}
     return render_to_response('rate/lecturer_list.html', c)
 
 
@@ -163,8 +163,8 @@ def response(request):
 def add_a_response(request):
     c = {}
     c.update(csrf(request))
-    c.update({'lecturers': Lecturer.objects.all()})
-    c.update({'courses': Course.objects.all()})
+    c.update({'lecturers': Lecturer.objects.all().order_by('first_name')})
+    c.update({'courses': Course.objects.all().order_by('initials')})
     c['message'] = None
 
     if request.method == 'POST':
