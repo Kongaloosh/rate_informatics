@@ -28,7 +28,7 @@
                 <div class="span12">
                     <div class="text col-md-9">
                         <strong>{{selection.course.initials}}</strong>
-                        <p>{{selection.rating | safe | markdown}}</p>
+                        <p>{{selection.rating | safe}}</p>
                     </div>
 
                     <div class="timing col-md-3 pull-right">
@@ -49,7 +49,7 @@
                 {% for element in review %}
                 <div class="row">
                     <div class="col-md-9">
-                        <p>{{element.rating | safe | markdown}}</p>
+                        <p>{{element.rating | safe}}</p>
                     </div>
                     <div class="col-md-3 pull-right">
                         <span>semester {{element.semester}}</span>

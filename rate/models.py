@@ -28,7 +28,7 @@ class Course(models.Model):
 class Rating(models.Model):
     year = models.IntegerField()
     semester = models.IntegerField()
-    rating = models.TextField(max_length=1000)
+    rating = models.TextField(max_length=10000)
     lecturer_1 = models.ForeignKey(Lecturer, related_name="first_lecturer")
     lecturer_2 = models.ForeignKey(Lecturer, null=True, default=None, related_name="second_lecturer")
     course = models.ForeignKey(Course)
@@ -44,10 +44,11 @@ class Rating(models.Model):
 
     @classmethod
     def create(cls, year, semester, lecturer_1, course, text, lecturer_2=None):
+        from markdown import markdown
         if isinstance(year, int) and isinstance(semester, int):
             a = cls(year=year,
                     semester=semester,
-                    course=course, rating=text,
+                    course=course, rating=str(markdown(text)),
                     lecturer_1=lecturer_1,
                     lecturer_2=lecturer_2)
             a.save()
