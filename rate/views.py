@@ -17,7 +17,7 @@ def index(request):
     c.update({'user': request.user})
     if request.method == 'POST':
         username = "user"
-        password = request.POST.get('password')
+        password = request.POST.get('password').lower()
         user = authenticate(username=username, password=password)
         if user:
             if user.is_active:
